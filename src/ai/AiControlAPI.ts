@@ -138,6 +138,21 @@ export class AiControlAPI implements MiniNomadFullAPI {
     }
   }
 
+  createHeart(scale: number = 1): void {
+    try {
+      const geometry = this.geometryFactory.createHeart(scale);
+      this.applyNewGeometry(geometry);
+      this.material.setColor(0.95, 0.45, 0.4);
+      this.material.setRoughness(0.18);
+      this.material.setMetalness(0.05);
+      this.emit('geometryCreated', { type: 'heart', scale });
+      this.emit('materialChanged', { color: { r: 0.95, g: 0.45, b: 0.4 }, roughness: 0.18, metalness: 0.05 });
+    } catch (e) {
+      this.recordError('CREATE_HEART', (e as Error).message);
+      throw e;
+    }
+  }
+
   setBrushType(type: BrushType): void {
     this.brush.setBrushType(type);
     this.emit('brushChanged', { type });

@@ -10,6 +10,8 @@ import {
   Float32BufferAttribute,
   Uint32BufferAttribute,
   Vector3,
+  Shape,
+  ExtrudeGeometry,
 } from 'three';
 import type { SphereParams, BoxParams, TorusParams, SubdivisionConfig } from '../types';
 import { DEFAULT_SUBDIVISION } from '../types';
@@ -85,6 +87,70 @@ export class GeometryFactory {
     );
 
     this.finalize(geometry);
+    this.memoryGuard.checkVertexCount(geometry.attributes.position.count);
+    return geometry;
+  }
+
+  createHeart(scale: number = 1): BufferGeometry {
+    const s = Math.max(0.01, scale);
+
+    const outlineSegments = 160;
+    const depthSegments = 80;
+
+    const positions: number[] = [];
+    const uvs: number[] = [];
+    const indices: number[] = [];
+
+    for (let i = 0; i <= outlineSegments; i++) {
+      const t = (i / outlineSegments) * Math.PI * 2;
+
+      const hx = 16 * Math.pow(Math.sin(t), 3);
+      const hy = 13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t);
+
+      for (let j = 0; j <= depthSegments; j++) {
+        const u = (j / depthSegments) * Math.PI;
+
+        const sf = Math.pow(Math.sin(u), 0.3);
+        const zDir = Math.cos(u);
+
+        const depth = 18.0;
+        const z = zDir * depth * 0.05 * s;
+
+        const x = hx * 0.05 * s * sf;
+        const y = hy * 0.05 * s * sf;
+
+        positions.push(x, y, z);
+        uvs.push(i / outlineSegments, j / depthSegments);
+      }
+    }
+
+    for (let i = 0; i < outlineSegments; i++) {
+      for (let j = 0; j < depthSegments; j++) {
+        const a = i * (depthSegments + 1) + j;
+        const b = a + 1;
+        const c = a + (depthSegments + 1);
+        const d = c + 1;
+
+        indices.push(a, b, d);
+        indices.push(a, d, c);
+      }
+    }
+
+    const geometry = new BufferGeometry();
+    geometry.setAttribute('position', new Float32BufferAttribute(positions, 3));
+    geometry.setAttribute('uv', new Float32BufferAttribute(uvs, 2));
+    geometry.setIndex(new Uint32BufferAttribute(indices, 1));
+
+    const colorCount = positions.length / 3;
+    const colors = new Float32Array(colorCount * 3);
+    colors.fill(1.0);
+    geometry.setAttribute('color', new Float32BufferAttribute(colors, 3));
+
+    geometry.center();
+    geometry.computeVertexNormals();
+    geometry.computeBoundingBox();
+    geometry.computeBoundingSphere();
+
     this.memoryGuard.checkVertexCount(geometry.attributes.position.count);
     return geometry;
   }

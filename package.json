@@ -1,0 +1,30 @@
+{
+  "name": "mini-nomad-android-ai",
+  "version": "1.0.0",
+  "description": "Lightweight 3D sculpting app with AI absolute control - Nomad Sculpt clone for Android",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "cap:add:android": "npx cap add android",
+    "cap:sync": "npx cap sync android",
+    "cap:open": "npx cap open android",
+    "build:apk": "npm run build && npx cap sync android && cd android && ./gradlew assembleDebug",
+    "build:apk:win": "npm run build && npx cap sync android && cd android && .\\gradlew.bat assembleDebug",
+    "test:ai": "vite --mode test"
+  },
+  "dependencies": {
+    "three": "0.186.0",
+    "@capacitor/core": "6.2.2",
+    "@capacitor/filesystem": "6.0.4"
+  },
+  "devDependencies": {
+    "@capacitor/android": "6.2.2",
+    "@capacitor/cli": "6.2.2",
+    "@types/three": "0.186.0",
+    "typescript": "7.0.2",
+    "vite": "8.3.0"
+  }
+}

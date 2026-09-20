@@ -1,0 +1,10 @@
+MiniNomad v1.0: 3D sculpting app with AI absolute control
+
+- Three.js + WebGL rendering engine (14 core modules)
+- 6 sculpting brushes with S-Pen pressure support
+- Mask system, layer system, vertex coloring, PBR materials
+- AI Control API: 13 standard + 20 god-mode interfaces
+- CommandParser + StrokeScheduler for AI automation loop
+- Capacitor 6 Android project initialized
+- GitHub Actions workflow for cloud APK build
+- Nomad-style dark theme UI (toolbar/topmenu/bottombar/layerpanel)

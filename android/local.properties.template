@@ -1,0 +1,12 @@
+# This file must be created before building APK locally.
+# Copy this file to "local.properties" and set the correct SDK path.
+#
+# Windows example:
+# sdk.dir=C\:\\Users\\YourName\\AppData\\Local\\Android\\Sdk
+#
+# macOS example:
+# sdk.dir=/Users/YourName/Library/Android/sdk
+#
+# Linux example:
+# sdk.dir=/home/YourName/Android/Sdk
+sdk.dir=REPLACE_WITH_YOUR_ANDROID_SDK_PATH

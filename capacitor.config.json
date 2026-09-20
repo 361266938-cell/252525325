@@ -1,0 +1,26 @@
+{
+  "appId": "com.mininomad.sculpt",
+  "appName": "MiniNomad",
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "https",
+    "cleartext": false
+  },
+  "android": {
+    "backgroundColor": "#1a1a1a",
+    "allowMixedContent": false,
+    "captureInput": true,
+    "webContentsDebuggingEnabled": true
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 500,
+      "backgroundColor": "#1a1a1a",
+      "showSpinner": false
+    },
+    "Filesystem": {
+      "androidIsPublicStorage": false
+    }
+  },
+  "cordova": {}
+}
